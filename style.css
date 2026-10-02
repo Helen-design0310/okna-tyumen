@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap");
+
+/* Макет Figma: фрейм 1920 × 1004. Все размеры ниже — в пикселях макета,
+   --u = 1px макета при текущей ширине окна. */
+:root {
+  --bg: #262626;
+  --yellow: #ffdf6b;
+  --u: calc(100vw / 1920);
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--bg); }
+body { font-family: "Montserrat", sans-serif; color: #fff; background: var(--bg); }
+
+@view-transition { navigation: auto; }
+::view-transition-old(photo), ::view-transition-new(photo) { animation-duration: .6s; }
+
+.hero { position: relative; width: 100vw; height: calc(1004 * var(--u)); overflow: hidden; }
+.left { display: contents; }
+.hero > *, .left > * { position: absolute; }
+
+/* меню */
+.nav {
+  left: calc(80 * var(--u)); top: calc(52 * var(--u));
+  height: calc(60 * var(--u)); width: calc(608 * var(--u));
+  display: flex; align-items: center; justify-content: space-between;
+  background: #3b3b3b; border-radius: 999px;
+}
+.nav a {
+  display: flex; align-items: center; justify-content: center; height: 100%;
+  color: #fff; text-decoration: none; font-size: calc(20 * var(--u)); font-weight: 400;
+  border-radius: 999px; transition: background .2s;
+}
+.nav a:nth-child(1) { width: calc(155 * var(--u)); }
+.nav a:not(.active) { position: absolute; transform: translateX(-50%); padding: 0 calc(24 * var(--u)); }
+.nav a:nth-child(2) { left: calc(248 * var(--u)); }
+.nav a:nth-child(3) { left: calc(390 * var(--u)); }
+.nav a:nth-child(4) { left: calc(518 * var(--u)); }
+.nav a.active { background: #fff; color: #000; }
+.nav a:not(.active):hover { background: #4a4a4a; }
+
+/* заголовок */
+.title { left: calc(80 * var(--u)); top: calc(308 * var(--u)); }
+.title h1 {
+  font-weight: 300; font-size: calc(70 * var(--u)); line-height: calc(72 * var(--u));
+  letter-spacing: -.01em; white-space: nowrap;
+}
+.title em {
+  display: block; margin: calc(16 * var(--u)) 0 0 calc(160 * var(--u));
+  font-style: italic; font-weight: 300; color: var(--yellow);
+  font-size: calc(24 * var(--u)); white-space: nowrap;
+}
+
+.lead {
+  left: calc(80 * var(--u)); top: calc(700 * var(--u)); width: calc(440 * var(--u));
+  font-weight: 300; font-size: calc(20 * var(--u)); line-height: calc(24 * var(--u));
+}
+
+.tags { left: calc(80 * var(--u)); top: calc(901 * var(--u)); display: flex; gap: calc(10 * var(--u)); }
+.tags span {
+  height: calc(52 * var(--u)); display: flex; align-items: center; justify-content: center; width: calc(181 * var(--u));
+  border: 1px solid rgba(255,255,255,.75); border-radius: 999px;
+  font-size: calc(18 * var(--u)); font-weight: 400; white-space: nowrap;
+}
+.tags span:first-child { width: calc(141 * var(--u)); }
+
+/* фото 1135 × 905 (прозрачный вырез под кнопку и скругления уже в webp) */
+.photo-wrap { left: calc(705 * var(--u)); top: calc(48 * var(--u)); width: calc(1135 * var(--u)); height: calc(905 * var(--u)); }
+.photo { position: relative; display: block; width: 100%; height: 100%; cursor: pointer; view-transition-name: photo; }
+.photo img { width: 100%; height: 100%; display: block; }
+
+.hint {
+  position: absolute; left: calc(628 * var(--u)); top: calc(541 * var(--u));
+  height: calc(60 * var(--u)); padding: 0 calc(34 * var(--u)) 0 calc(28 * var(--u));
+  display: inline-flex; align-items: center; gap: calc(16 * var(--u));
+  background: #fff; color: #222; border-radius: 999px;
+  font-size: calc(20 * var(--u)); font-weight: 500; white-space: nowrap;
+}
+.hint::before {
+  content: ""; width: calc(16 * var(--u)); height: calc(16 * var(--u)); border-radius: 50%; background: #222;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse { 50% { transform: scale(1.5); opacity: .5; } }
+
+.contact { position: absolute; left: calc(903 * var(--u)); top: calc(2 * var(--u)); width: calc(232 * var(--u)); height: calc(66 * var(--u)); }
+.contact a {
+  display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;
+  background: var(--yellow); color: #000; text-decoration: none; border-radius: 999px;
+  font-size: calc(20 * var(--u)); font-weight: 500; transition: transform .2s;
+}
+.contact a:hover { transform: translateY(-1px); }
+
+/* телефон / узкие экраны */
+@media (max-width: 900px) {
+  :root { --u: 1px; }
+  .hero { height: auto; display: flex; flex-direction: column; gap: 32px; padding: 16px; overflow: visible; }
+  .hero > *, .left > * { position: static; }
+  .nav { width: auto; align-self: flex-start; height: 48px; gap: 0; }
+  .nav a { position: static !important; transform: none !important; width: auto !important; padding: 0 16px; font-size: 14px; }
+  .title h1 { font-size: 40px; line-height: 1.1; white-space: normal; }
+  .title em { margin: 12px 0 0 56px; font-size: 16px; }
+  .lead { width: auto; font-size: 16px; line-height: 1.4; }
+  .tags { flex-wrap: wrap; }
+  .tags span, .tags span:first-child { width: auto; height: 44px; font-size: 14px; padding: 0 20px; }
+  .photo-wrap { order: 2; position: relative; width: 100%; height: auto; aspect-ratio: 1135 / 905; }
+  .photo-wrap .contact { position: absolute; left: auto; right: 0; top: 0; width: 20%; height: 7.5%; }
+  .contact a { font-size: 12px; }
+  .hint { left: 50%; top: 50%; height: 44px; font-size: 14px; padding: 0 20px 0 16px; gap: 10px; }
+  .hint::before { width: 10px; height: 10px; }
+  .tags { order: 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hint::before { animation: none; }
+  @view-transition { navigation: none; }
+}
