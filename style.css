@@ -5,16 +5,19 @@
 :root {
   --bg: #262626;
   --yellow: #ffdf6b;
-  --u: calc(100vw / 1920);
+  --u: min(100vw / 1920, 100dvh / 1004);
 }
 * { box-sizing: border-box; margin: 0; }
 html { background: var(--bg); }
-body { font-family: "Montserrat", sans-serif; color: #fff; background: var(--bg); }
+body {
+  font-family: "Montserrat", sans-serif; color: #fff; background: var(--bg);
+  height: 100dvh; overflow: hidden; display: grid; place-items: center;
+}
 
 @view-transition { navigation: auto; }
 ::view-transition-old(photo), ::view-transition-new(photo) { animation-duration: .6s; }
 
-.hero { position: relative; width: 100vw; height: calc(1004 * var(--u)); overflow: hidden; }
+.hero { position: relative; width: calc(1920 * var(--u)); height: calc(1004 * var(--u)); overflow: hidden; }
 .left { display: contents; }
 .hero > *, .left > * { position: absolute; }
 
@@ -92,7 +95,8 @@ body { font-family: "Montserrat", sans-serif; color: #fff; background: var(--bg)
 /* телефон / узкие экраны */
 @media (max-width: 900px) {
   :root { --u: 1px; }
-  .hero { height: auto; display: flex; flex-direction: column; gap: 32px; padding: 16px; overflow: visible; }
+  body { height: auto; overflow: auto; display: block; }
+  .hero { width: auto; height: auto; display: flex; flex-direction: column; gap: 32px; padding: 16px; overflow: visible; }
   .hero > *, .left > * { position: static; }
   .nav { width: auto; align-self: flex-start; height: 48px; gap: 0; }
   .nav a { position: static !important; transform: none !important; width: auto !important; padding: 0 16px; font-size: 14px; }
